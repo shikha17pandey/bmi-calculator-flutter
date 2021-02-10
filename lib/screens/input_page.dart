@@ -1,10 +1,14 @@
+import 'file:///C:/Users/shikha/Downloads/bmi-calculator-flutter/lib/screens/results_page.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'icon_content.dart';
-import 'reusable_card.dart';
+import '../components/icon_content.dart';
+import '../reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import '../constants.dart';
+import 'package:bmi_calculator/reusable_card.dart';
+import '../components/bottom_button.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
 
 
 enum Gender {
@@ -45,6 +49,7 @@ class _InputPageState extends State<InputPage> {
   // }
  int height = 180;
  int weight = 60;
+ int age = 20;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,8 +197,28 @@ class _InputPageState extends State<InputPage> {
                         'AGE',
                         style: kLabelTextStyle,
                       ),
-
-
+                       Text(
+                         age.toString(),
+                         style: kNumberTextStyle,
+                        ),
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           RoundIconButton(icon: FontAwesomeIcons.minus,
+                           onPressed: (){
+                             setState(() {
+                               age--;
+                             });
+                             },
+                              ),
+                           SizedBox(width: 10.0,),
+                           RoundIconButton(icon: FontAwesomeIcons.plus , onPressed: (){
+                             setState(() {
+                               age++;
+                             });
+                           },)
+                         ],
+                       ),
                     ],
                   ),
                 ),
@@ -201,11 +226,19 @@ class _InputPageState extends State<InputPage> {
             ],
           ),
           ),
-          Container(
-            color: kBottomContainerColour,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          BottomButton(
+            buttonTitle: 'CALCULATE',
+            onTap: (){
+              CalculatorBrain calc = CalculatorBrain(height: height, weight: weight);
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage(
+               bmiResult: calc.calculateBMI(),
+               resultText: calc.getResult(),
+               interpretation: calc.getInterpretation(),
+                 ),
+              ),
+              );
+            },
           ),
         ],
       )
@@ -213,11 +246,13 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
+
 class RoundIconButton extends StatelessWidget {
 
-  RoundIconButton({@required this.icon, this.onPressed});
+  RoundIconButton({@required this.icon, @required this.onPressed});
   final IconData icon;
   final Function onPressed;
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(

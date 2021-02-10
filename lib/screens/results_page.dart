@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
 import '../reusable_card.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
@@ -51,14 +52,31 @@ class ResultsPage extends StatelessWidget {
                  textAlign: TextAlign.center,
                  style: kBodyTextStyle,
                ),
-             ],
+
+            ],
            ),
           ),
+          ),
+          Expanded(
+            child: RaisedButton.icon(
+              onPressed: (){},
+              icon: Icon(
+                Icons.save_alt_outlined,
+                size: 25.0,
+              ),
+              label: Text('Save It',
+                style: TextStyle(
+                  fontSize: 25.0,
+                ),
+              ),
+              color: kBottomContainerColour,
+
+            ),
           ),
           BottomButton(onTap: (){
             Navigator.pop(context);
           },
-              buttonTitle: 'RE-CALCULATE',
+            buttonTitle: 'RE-CALCULATE',
           ),
         ],
       )

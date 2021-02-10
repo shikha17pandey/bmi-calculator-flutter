@@ -61,6 +61,21 @@ class _InputPageState extends State<InputPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+         Expanded(
+           child: Column(
+             children: [
+               TextField(
+                 decoration: InputDecoration(
+                   //icon: Icon(Icons.send),
+                   //hintText: 'Hint Text',
+                   helperText: 'Enter your Name',
+                   border: const OutlineInputBorder(),
+                 ),
+               ),
+             ],
+           ),
+
+         ),
           Expanded(
             child: Row(
             children: [
@@ -241,7 +256,7 @@ class _InputPageState extends State<InputPage> {
             },
           ),
         ],
-      )
+      ),
     );
   }
 }

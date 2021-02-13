@@ -1,15 +1,35 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
 import '../reusable_card.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/db_test.dart';
 
 class ResultsPage extends StatelessWidget {
-  ResultsPage({@required this.interpretation, @required this.bmiResult, @required this.resultText});
+  ResultsPage({@required this.interpretation, @required this.bmiResult, @required this.resultText, @required this.height, @required this.weight});
   final String bmiResult;
+  final double height;
+  final double weight;
   final String resultText;
   final String interpretation;
+
+
+  final dbHelper = DatabaseHelper.instance;
+  void _insert() async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnName : 'Bob',
+      DatabaseHelper.columnAge  : 35,
+      DatabaseHelper.columnWeight  : this.weight,
+      DatabaseHelper.columnHeight  : this.height,
+      DatabaseHelper.columnResult  : this.bmiResult,
+    };
+    final id = await dbHelper.insert(row);
+    print('inserted row id: $id');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +79,7 @@ class ResultsPage extends StatelessWidget {
           ),
           Expanded(
             child: RaisedButton.icon(
-              onPressed: (){},
+              onPressed: _insert,
               icon: Icon(
                 Icons.save_alt_outlined,
                 size: 25.0,

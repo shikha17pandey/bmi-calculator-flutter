@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'file:///C:/Users/shikha/Downloads/bmi-calculator-flutter/lib/screens/results_page.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -58,6 +60,31 @@ class _InputPageState extends State<InputPage> {
           (
             child: Text('BMI CALCULATOR')),
       ),
+      drawer: Drawer(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 100,
+                color: Color(0xFF0A0E21),
+
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 20.0),
+                  child: Text('About US',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w400 ,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+      ),
+
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -245,12 +272,13 @@ class _InputPageState extends State<InputPage> {
             buttonTitle: 'CALCULATE',
             onTap: (){
               CalculatorBrain calc = CalculatorBrain(height: height, weight: weight);
-
               Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage(
                bmiResult: calc.calculateBMI(),
-               resultText: calc.getResult(),
-               interpretation: calc.getInterpretation(),
-                 ),
+                 resultText: calc.getResult(),
+                 interpretation: calc.getInterpretation(),
+                 weight: this.weight.toDouble(),
+                  height: this.height.toDouble(),
+                   ),
               ),
               );
             },
